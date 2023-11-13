@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_chatting_application_springboot" default="compile.module.chatting_application_springboot">
+  <dirname property="module.chatting_application_springboot.basedir" file="${ant.file.module_chatting_application_springboot}"/>
+  
+  <property name="module.jdk.home.chatting_application_springboot" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.chatting_application_springboot" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.chatting_application_springboot" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.chatting_application_springboot" value="-encoding UTF-8 -source 17 -target 17 ${compiler.args}"/>
+  
+  <property name="chatting_application_springboot.output.dir" value="${module.chatting_application_springboot.basedir}/out/production/chatting_application_springBoot"/>
+  <property name="chatting_application_springboot.testoutput.dir" value="${module.chatting_application_springboot.basedir}/out/test/chatting_application_springBoot"/>
+  
+  <path id="chatting_application_springboot.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="chatting_application_springboot.module.production.classpath">
+    <path refid="${module.jdk.classpath.chatting_application_springboot}"/>
+  </path>
+  
+  <path id="chatting_application_springboot.runtime.production.module.classpath">
+    <pathelement location="${chatting_application_springboot.output.dir}"/>
+  </path>
+  
+  <path id="chatting_application_springboot.module.classpath">
+    <path refid="${module.jdk.classpath.chatting_application_springboot}"/>
+    <pathelement location="${chatting_application_springboot.output.dir}"/>
+  </path>
+  
+  <path id="chatting_application_springboot.runtime.module.classpath">
+    <pathelement location="${chatting_application_springboot.testoutput.dir}"/>
+    <pathelement location="${chatting_application_springboot.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.chatting_application_springboot">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.chatting_application_springboot">
+    <patternset refid="excluded.from.module.chatting_application_springboot"/>
+  </patternset>
+  
+  <path id="chatting_application_springboot.module.sourcepath">
+    <dirset dir="${module.chatting_application_springboot.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.chatting_application_springboot" depends="compile.module.chatting_application_springboot.production,compile.module.chatting_application_springboot.tests" description="Compile module chatting_application_springBoot"/>
+  
+  <target name="compile.module.chatting_application_springboot.production" depends="register.custom.compilers" description="Compile module chatting_application_springBoot; production classes">
+    <mkdir dir="${chatting_application_springboot.output.dir}"/>
+    <javac2 destdir="${chatting_application_springboot.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.chatting_application_springboot}/javac">
+      <compilerarg line="${compiler.args.chatting_application_springboot}"/>
+      <bootclasspath refid="chatting_application_springboot.module.bootclasspath"/>
+      <classpath refid="chatting_application_springboot.module.production.classpath"/>
+      <src refid="chatting_application_springboot.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.chatting_application_springboot"/>
+    </javac2>
+    
+    <copy todir="${chatting_application_springboot.output.dir}">
+      <fileset dir="${module.chatting_application_springboot.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.chatting_application_springboot.tests" depends="register.custom.compilers,compile.module.chatting_application_springboot.production" description="compile module chatting_application_springBoot; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.chatting_application_springboot" description="cleanup module">
+    <delete dir="${chatting_application_springboot.output.dir}"/>
+    <delete dir="${chatting_application_springboot.testoutput.dir}"/>
+  </target>
+</project>
